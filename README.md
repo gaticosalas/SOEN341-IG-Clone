@@ -8,6 +8,7 @@ SOEN-341 Project
 | Lorenzo Bertacchi | loren589 |
 | Joshua Castillo | Joshua-Castillo |
 | Visweshwaran Balasubramanian | vishybala |
+| Victor Tobar | MKB-1 |
 
 ## Languages:
 - JavaScript (node.js, jsx)
