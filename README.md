@@ -1,29 +1,34 @@
 # SOEN341-IG-Clone
 SOEN-341 Project
 
-# Team Members
-Juan Salas - gaticosalas
-Lorenzo Bertacchi - loren589
-Joshua Castillo - Joshua-Castillo
-Victor Tobar - MKB-1
-Vishy -
+## Team Members:
+| Name | Github Username |
+| --- | --- |
+| Juan Salas | gaticosalas |
+| Lorenzo Bertacchi | loren589 |
+| Joshua Castillo | Joshua-Castillo |
+| Vishy | |
 
-# Technologies:
-Database: MongoDB Atlas (Cloud)
-Data modeling: Mongoose
-Back-end: Express
-Front-end: React
-API Testing: Postman
-TBD - Deployment: Heroku (Development Server)
+## Languages:
+- JavaScript (node.js, jsx)
+- SCSS / CSS
 
-# Description:
-This will be a photo sharing platform similar to Instagram where users can interact with eachother by posting media content, and commenting on them.
+## Technologies:
+- Database: MongoDB Atlas (Cloud)
+- Data modeling: Mongoose
+- Back-end (Validation/Routing): Express
+- Front-end: React
+- API Testing: Postman
+- (TBD) - Deployment: Heroku (Development Server)
 
-# Objective:
-The objectives are for users to be able to create an account, post pictures, follow other users and react to other user's posts (like/comment).
+## Description:
+This will be a photo sharing platform similar to Instagram where users can interact with eachother by posting media content, liking and commenting on other's posts, and following eachother.
 
-# Core Features:
+## Objective:
+The objectives of this team project are to properly organize and plan the creation of a web site from Back-end to Front-end in such a way that each milestone is reached in a timely manner and all the core features are included in the final deliverable.
+
+## Core Features:
 1. Posting a picture with description
 2. Following a user
 3. Leaving a comment
-4. Post bookmarking system
+4. (Additional Feature) Post bookmarking system
