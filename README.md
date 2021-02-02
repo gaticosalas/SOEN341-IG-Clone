@@ -7,7 +7,7 @@ SOEN-341 Project
 | Juan Salas | gaticosalas |
 | Lorenzo Bertacchi | loren589 |
 | Joshua Castillo | Joshua-Castillo |
-| Vishy | |
+| Visweshwaran Balasubramanian | vishybala |
 
 ## Languages:
 - JavaScript (node.js, jsx)
