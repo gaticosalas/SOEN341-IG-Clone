@@ -101,7 +101,7 @@ router.delete('/', auth, async (req, res) => {
     }
 });
 
-// @route  PUT api/profile/follow
+// @route  PUT api/profile/follow/:user_id
 // @desc   Add user to you follows list and add yourself to their folledBy list
 // @access Private
 router.put('/follow/:user_id', auth, async (req, res) => {
@@ -140,8 +140,8 @@ router.put('/follow/:user_id', auth, async (req, res) => {
     }
 });
 
-// @route  DELETE api/profile/follow
-// @desc   Delete profile experience
+// @route  DELETE api/profile/follow/:user_id
+// @desc   Delete user from your follows list and delete yourself from their followedBy list
 // @access Private
 router.delete('/follow/:user_id', auth, async (req, res) => {
     try {
