@@ -6,10 +6,14 @@ const PostSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
          ref: 'users' //referencing the user to the post -->shows who made the post
         },
+    //The posted picture
+    picture:{
+            type: String,
+            required: true
+        },
     //including a text field for the post's caption
     caption:{
-        type: String,
-        required: true //should a text field be mandatory though?
+        type: String
     },
     //the post user's name -->if the user deletes an account, the post can still remain
     name: {
@@ -41,12 +45,12 @@ const PostSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'users'
             },
+            name: {
+                type: String
+            },
             text: {
                 type: String,
                 required: true
-            },
-            name: {
-                type: String
             },
             //profile pic
             avatar: {
