@@ -6,6 +6,7 @@ const User = require('../../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require ('config');
+const gravatar = require('gravatar');
 
 // @route  GET api/users
 // @desc   Test route
@@ -24,7 +25,7 @@ router.post('/', [
         return res.status(400).json({errors: errors.array})
     }
 
-    const { avatar, email, first_name, last_name, username, password} = req.body;
+    const { email, first_name, last_name, username, password} = req.body;
 
     try{
         // Check if email has already been used
@@ -38,6 +39,13 @@ router.post('/', [
         if(user){
             return res.status(400).json({errors: [{msg: 'Username already taken!'}]})
         }
+
+        // Get user gravatar
+        const avatar = gravatar.url(email, {
+            s: '200', // Size
+            r: 'pg', // Rating
+            d: 'mm' // Default icon if no avatar
+        })
 
         user = new User({
             avatar,
