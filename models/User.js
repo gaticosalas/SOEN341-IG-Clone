@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    email: {
+       type: String,
+        required: true
+    },
     first_name: {
         type: String,
         required: true,
