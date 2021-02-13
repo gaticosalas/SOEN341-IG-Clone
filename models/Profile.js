@@ -11,8 +11,8 @@ const ProfileSchema = new mongoose.Schema({
     follows: [
         {
             user: {
-                type: Schema.Types.ObjectId,
-                ref: 'users'
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'user'
             },
             name: {
                 type: String
@@ -29,8 +29,8 @@ const ProfileSchema = new mongoose.Schema({
     followedBy: [
     {
         user: {
-            type: Schema.Types.ObjectId,
-            ref: 'users'
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user'
         },
         name: {
             type: String
@@ -49,4 +49,4 @@ const ProfileSchema = new mongoose.Schema({
     }
 });
 
-module.exports = User = mongoose.model('profile', ProfileSchema);
+module.exports = Profile = mongoose.model('profile', ProfileSchema);
