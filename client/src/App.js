@@ -1,28 +1,32 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-// Containers
-import Home from './containers/layout/Home';
-import Navbar from './containers/layout/Navbar';
+// Redux
+import { Provider } from 'react-redux';
+import store from './store'
 
 // Components
-import HomeComponent from './components/layout/home';
-import NavbarComponent from './components/layout/navbar';
+import Home from './components/layout/Home';
+import Navbar from './components/layout/Navbar';
+import Alert from './components/layout/Alert';
 
 import './App.css';
 
 const App = () => (
-  <Router>
-    <Fragment>
-      <Navbar  Layout={NavbarComponent}/>
-      <Route exact path='/' component={(props) => <Home {...props} Layout={HomeComponent} title="Home"/>} />
-      <section className="container">
-        <Switch>
-          {/* Other routes will go here like such: */}
-          {/* <Route exact path='/' component={(props) => <Home {...props} Layout={HomeComponent} title="Home"/>} /> */}
-        </Switch>
-      </section>
-    </Fragment>
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <Fragment>
+        <Navbar />
+        <Route exact path='/' component={Home} />
+        <section className="container">
+          <Alert />
+          <Switch>
+            {/* Other routes will go here like such: */}
+            {/* <Route exact path='/' component={HomeComponent} /> */}
+          </Switch>
+        </section>
+      </Fragment>
+    </Router>
+  </Provider>
 )
 export default App;
