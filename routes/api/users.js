@@ -8,11 +8,9 @@ const jwt = require('jsonwebtoken');
 const config = require ('config');
 const gravatar = require('gravatar');
 
-// @route  GET api/users
-// @desc   Test route
+// @route  POST api/users
+// @desc   Creates a new user if email or username does not yet exist in database
 // @access Public
-router.get('/', (req, res) => res.send('Users route'));
-
 router.post('/', [
     check('email', 'Email is not valid.').isEmail(),
     check('first_name', 'First name is required.').not().isEmpty(),
