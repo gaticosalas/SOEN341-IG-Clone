@@ -1,4 +1,6 @@
 {
     "mongoURI": "mongodb+srv://juan123:juan123@igclone.uobvs.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "jwtSecret": "mysecrettoken"
+    "jwtSecret": "mysecrettoken",
+    "awsAccessKey": "AKIAIQA35V66T2MUUFRQ",
+    "awsSecretKey": "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"
 }
