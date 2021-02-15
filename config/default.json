@@ -1,7 +1,0 @@
-{
-    "mongoURI": "mongodb+srv://juan123:juan123@igclone.uobvs.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "jwtSecret": "mysecrettoken",
-    "awsAccessKey": "AKIAINYJNGCMHEC2DGFA",
-    "awsSecretKey": "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",
-    "awsRegion": "ca-central-1"
-}
