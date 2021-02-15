@@ -14,7 +14,7 @@ const Post = require('/../.test./models/Post');
 // @route POST api/posts
 // @desc creating a post
 // @access Private
-router.post('/', [auth, check('text', "Text is necessary").not().isEmpty()], //do we actually want the post text to be necessary? I did remove it from the Post Model...
+router.post('/', [auth, check('picture', "Picture is necessary").not().isEmpty()], //pics are necessary to create post
 async (req,res) => {
     const errors= validationResult(req);
     if(!errors.isEmpty()) {//now doing error checks below -->using try catch for server error
@@ -25,7 +25,7 @@ async (req,res) => {
         const user = await (await User.findById(req.user.id)).select('-password'); //don't need to send in the password so omit it
         const newPost = new Post({
             picture: req.body.string, //look into using Multer? It's a node.js middleware used to upload files to the DB
-            text: req.body.text,
+            caption: body.caption,
             name: user.name, //getting the name of the user who is making the post
             avatar: user.avatar, //getting the avatar of the user who is making the post
             user: req.user.id
