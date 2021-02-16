@@ -9,7 +9,7 @@ const {check, validationResult} = require('express-validator');
 //getting the user's name, their avatar, etc. but not sending it with the requests
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
-const Post = require('/../.test./models/Post');
+const Post = require('../../models/Post');
 
 // @route POST api/posts
 // @desc creating a post
@@ -24,14 +24,14 @@ async (req,res) => {
     try {//user is logged in, has token, and thus ID is available
         const user = await (await User.findById(req.user.id)).select('-password'); //don't need to send in the password so omit it
         const newPost = new Post({
-            picture: req.body.string, //look into using Multer? It's a node.js middleware used to upload files to the DB
-            caption: body.caption,
-            name: user.name, //getting the name of the user who is making the post
+            picture: req.body.picture,
+            caption: req.body.caption,
+            username: user.username, //getting the username of the user who is making the post
             avatar: user.avatar, //getting the avatar of the user who is making the post
             user: req.user.id
     });
     const post = await newPost.save(); //waits for the response (the post being saved) before proceeding
-    res.json(post);}
+    res.json({ post, msg: "Post created successfully!"});}
     catch(err) {
         console.error(err.message);
         res.status(500).send("Server Error"); //server side error
@@ -113,7 +113,7 @@ router.put('/like/:id', auth, async (req, res) => {
         }
         post.likes.unshift({user : req.user.id});
         await post.save();
-        res.json(post.likes);
+        res.json({msg: "Post liked successfully"});
     } catch(err) {
         console.error(err.message);
         res.status(500).send("Server Error");
@@ -132,7 +132,7 @@ router.put('/unlike/:id', auth, async (req, res) => {
         const removeIndex = post.likes.map(like => like.user.toString()).indexOf(req.user.id);
         post.likes.splice(removeIndex, 1);
         await post.save();
-        res.json(post.likes);
+        res.json({msg: "Post unliked succesfully"});
     } catch(err) {
         console.error(err.message);
         res.status(500).send("Server Error");
@@ -152,13 +152,13 @@ try {
 
     const newComment = {
         text: req.body.text,
-        name: user.name,
+        username: user.username,
         avatar: user.avatar,
         user: req.user.id
     };
     post.comments.unshift(newComment);
     await post.save();
-    restart.json(post.comments);
+    restart.json({post, msg: "Comment created successfully"});
 } catch(err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -187,7 +187,7 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
         post.comments.splice(removeIndex, 1);
         await post.save();
 
-        res.json(post.comments);
+        res.json({post, msg: "Comment deleted successfully"});
     } catch(err) {
         console.error(err.message);
         res.status(500).send("server Error");

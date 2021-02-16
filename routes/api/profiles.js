@@ -6,13 +6,13 @@ const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 // const { check, validationResult } = require('express-validator');
 
-// @route  GET api/profile/me
+// @route  GET api/profiles/me
 // @desc   Get current users profile
 // @access Private
 router.get('/me', auth, async (req, res) => {
     try {
         const profile = await Profile.findOne({ user: req.user.id }).populate('user', 
-        ['name', 'avatar']);
+        ['first_name', 'last_name', 'username', 'avatar']);
 
         if (!profile) {
             return res.status(400).json({ msg: 'There is no profile for this user' });
@@ -25,7 +25,7 @@ router.get('/me', auth, async (req, res) => {
     }
 });
 
-// @route  POST api/profile/
+// @route  POST api/profiles/
 // @desc   Create or update user profile
 // @access Private
 router.post('/', auth, async (req, res) => {
@@ -37,6 +37,7 @@ router.post('/', auth, async (req, res) => {
 
     profileFields.user = req.user.id;
     if (bio) profileFields.bio = bio;
+    else profileFields.bio = "";
 
     try {
         let profile = await Profile.findOne({ user: req.user.id });
@@ -49,7 +50,7 @@ router.post('/', auth, async (req, res) => {
                 { new: true }
             );
 
-            return res.json(profile)
+            return res.json({ profile, msg: "Profile updated successfully" })
         }
 
         // Create
@@ -62,12 +63,12 @@ router.post('/', auth, async (req, res) => {
     }
 ;});
 
-// @route  GET api/profile/user/:user_id
+// @route  GET api/profiles/user/:user_id
 // @desc   Get profile by user ID
 // @access Public
 router.get('/user/:user_id', async (req, res) => {
     try {
-        const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['name', 'avatar']);
+        const profile = await Profile.findOne({ user: req.params.user_id }).populate('user', ['first_name', 'last_name', 'username', 'avatar']);
         if (!profile) return res.status(400).json({ msg: 'Profile not found' })
         res.json(profile);
     } catch(err) {
@@ -80,7 +81,7 @@ router.get('/user/:user_id', async (req, res) => {
     }
 });
 
-// @route    DELETE api/profile
+// @route    DELETE api/profiles
 // @desc     Delete profile, user & posts
 // @access   Private
 router.delete('/', auth, async (req, res) => {
@@ -94,14 +95,14 @@ router.delete('/', auth, async (req, res) => {
         User.findOneAndRemove({ _id: req.user.id })
       ]);
   
-      res.json({ msg: 'User deleted' });
+      res.json({ msg: 'User deleted successfully' });
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
     }
 });
 
-// @route  PUT api/profile/follow/:user_id
+// @route  PUT api/profiles/follow/:user_id
 // @desc   Add user to you follows list and add yourself to their folledBy list
 // @access Private
 router.put('/follow/:user_id', auth, async (req, res) => {
@@ -133,14 +134,14 @@ router.put('/follow/:user_id', auth, async (req, res) => {
         await myProfile.save();
         await theirProfile.save();
 
-        res.json(myProfile);
+        res.json({myProfile, msg: "User followed successfully"});
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');
     }
 });
 
-// @route  DELETE api/profile/follow/:user_id
+// @route  DELETE api/profiles/follow/:user_id
 // @desc   Delete user from your follows list and delete yourself from their followedBy list
 // @access Private
 router.delete('/follow/:user_id', auth, async (req, res) => {
@@ -160,7 +161,7 @@ router.delete('/follow/:user_id', auth, async (req, res) => {
         theirProfile.followedBy.splice(removeFollowedByIndex, 1);
         await theirProfile.save();
 
-        res.json({ profile });
+        res.json({ profile, msg: "User unfollowed successfully" });
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');

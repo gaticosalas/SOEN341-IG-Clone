@@ -5,18 +5,21 @@ import axios from 'axios'
 const Register = () => {
 
     const [formData, setFormData] = useState({
-        name: '',
+        last_name: '',
+        first_name: '',
+        username: '',
         email: '',
         password: '',
         password2: '',
     })
 
-    const { name, email, password, password2 } = formData
+    const { last_name, first_name, username, email, password, password2 } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value })
 
-    const onSubmit = async e => {
+    const register = async e => {
         e.preventDefault();
+
         if (password !== password2) { console.log('Bruh it aint the same') }
         else {
 
@@ -51,15 +54,13 @@ const Register = () => {
             <section class="container">
                 <h1 class="large text-primary">Sign Up</h1>
                 <p class="lead"><i class="fas fa-user"></i> Create Your Account</p>
-                <form class="form" onSubmit={e => onSubmit(e)}>
+                <form class="form" /* onSubmit={e => onSubmit(e)} */>
                     <div class="form-group">
                         <input
                             type="text"
-                            placeholder="Name"
-                            name="name"
-                            onChange={e => onChange(e)}
-                            value={name}
-                            required
+                            placeholder="Family name"
+                            name="last_name"
+                            onChange={event => onChange(event)}
                         />
                     </div>
                     <div class="form-group">
@@ -95,7 +96,7 @@ const Register = () => {
                             required
                         />
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Register" />
+                    <input type="submit" class="btn btn-primary" onClick={e => register(e)} value="Register" />
                 </form>
                 <p class="my-1">
                     Already have an account? <Link to="/">Sign In</Link>
