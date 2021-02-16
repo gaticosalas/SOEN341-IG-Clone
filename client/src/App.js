@@ -9,9 +9,10 @@ import store from './store'
 import Home from './components/layout/Home';
 import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
+import Login from './components/layout/Login'
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
-import RegisterComponent from './components/Register';
+import Register from './components/layout/Register';
 
 import './App.css';
 
@@ -29,13 +30,13 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={Login} />
           <section className="container">
             <Alert />
             <Switch>
               {/* Other routes will go here like such: */}
               {/* <Route exact path='/' component={HomeComponent} /> */}
-              <Route exact path='/register' component={(props) => <Register {...props} Layout={RegisterComponent} title="Register" />} />
+              <Route exact path='/register' component={(props) => <Register {...props} Layout={Register} title="Register" />} />
 
             </Switch>
           </section>
