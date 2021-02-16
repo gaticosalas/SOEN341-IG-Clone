@@ -9,6 +9,7 @@ import store from './store'
 import Home from './components/layout/Home';
 import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
+import Login from './components/layout/Login'
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 import Register from './components/layout/Register';
@@ -29,7 +30,7 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar />
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={Login} />
           <section className="container">
             <Alert />
             <Switch>
