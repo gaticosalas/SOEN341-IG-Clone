@@ -18,7 +18,7 @@ const Register = () => {
 
     const register = async e => {
         e.preventDefault();
-        
+
         if (password !== password2) { console.log('Bruh it aint the same') }
         else {
 
@@ -53,7 +53,7 @@ const Register = () => {
             <section class="container">
                 <h1 class="large text-primary">Sign Up</h1>
                 <p class="lead"><i class="fas fa-user"></i> Create Your Account</p>
-                <form class="form" onSubmit={e => onSubmit(e)}>
+                <form class="form" /* onSubmit={e => onSubmit(e)} */>
                     <div class="form-group">
                         <input
                             type="text"

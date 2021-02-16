@@ -9,7 +9,7 @@ const {check, validationResult} = require('express-validator');
 //getting the user's name, their avatar, etc. but not sending it with the requests
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
-const Post = require('/../.test./models/Post');
+const Post = require('../../models/Post');
 
 // @route POST api/posts
 // @desc creating a post

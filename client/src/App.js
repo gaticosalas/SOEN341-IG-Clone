@@ -11,7 +11,7 @@ import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
-import RegisterComponent from './components/Register';
+import Register from './components/layout/Register';
 
 import './App.css';
 
@@ -35,7 +35,7 @@ const App = () => {
             <Switch>
               {/* Other routes will go here like such: */}
               {/* <Route exact path='/' component={HomeComponent} /> */}
-              <Route exact path='/register' component={(props) => <Register {...props} Layout={RegisterComponent} title="Register" />} />
+              <Route exact path='/register' component={Register} />
 
             </Switch>
           </section>
