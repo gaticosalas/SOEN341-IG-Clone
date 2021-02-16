@@ -36,7 +36,7 @@ const App = () => {
             <Switch>
               {/* Other routes will go here like such: */}
               {/* <Route exact path='/' component={HomeComponent} /> */}
-              <Route exact path='/register' component={(props) => <Register {...props} Layout={Register} title="Register" />} />
+              <Route exact path='/register' component={Register} />
 
             </Switch>
           </section>
