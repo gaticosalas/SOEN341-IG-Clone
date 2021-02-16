@@ -9,8 +9,9 @@ import store from './store'
 import Home from './components/layout/Home';
 import Navbar from './components/layout/Navbar';
 import Alert from './components/layout/Alert';
-import { loadUser } from './actions/auth'; 
+import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
+import RegisterComponent from './components/Register';
 
 import './App.css';
 
@@ -22,22 +23,25 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
-  
+
   return (
-  <Provider store={store}>
-    <Router>
-      <Fragment>
-        <Navbar />
-        <Route exact path='/' component={Home} />
-        <section className="container">
-          <Alert />
-          <Switch>
-            {/* Other routes will go here like such: */}
-            {/* <Route exact path='/' component={HomeComponent} /> */}
-          </Switch>
-        </section>
-      </Fragment>
-    </Router>
-  </Provider>
-)}
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar />
+          <Route exact path='/' component={Home} />
+          <section className="container">
+            <Alert />
+            <Switch>
+              {/* Other routes will go here like such: */}
+              {/* <Route exact path='/' component={HomeComponent} /> */}
+              <Route exact path='/register' component={(props) => <Register {...props} Layout={RegisterComponent} title="Register" />} />
+
+            </Switch>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider>
+  )
+}
 export default App;
