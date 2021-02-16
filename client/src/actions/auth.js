@@ -52,6 +52,18 @@ export const register = ({ first_name, last_name, username, email, password }) =
 
     try {
         const res = await axios.post('/api/users', body, config);
+        
+        await axios.post('/api/profiles', {}, {
+            headers : {
+                // Setting the token in the header will only be done
+                // on this occasion. For any future private route calling
+                // setAuthToken.js will automatically add it when needed.
+                'Content-Type': 'application/json',
+                // test if rest.data.token is the right location
+                // when register component is complete
+                'x-auth-token': res.data.token
+            }
+        })
 
         dispatch({
             type: REGISTER_SUCCESS,

@@ -15,8 +15,8 @@ const PostSchema = new mongoose.Schema({
     caption:{
         type: String
     },
-    //the post user's name -->if the user deletes an account, the post can still remain
-    name: {
+    //the post's user username -->if the user deletes an account, the post can still remain
+    username: {
         type: String
     },
     //the user's profile pic
@@ -45,7 +45,7 @@ const PostSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'users'
             },
-            name: {
+            username: {
                 type: String
             },
             text: {
