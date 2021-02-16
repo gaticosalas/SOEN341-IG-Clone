@@ -37,6 +37,7 @@ router.post('/', auth, async (req, res) => {
 
     profileFields.user = req.user.id;
     if (bio) profileFields.bio = bio;
+    else profileFields.bio = "";
 
     try {
         let profile = await Profile.findOne({ user: req.user.id });
