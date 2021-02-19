@@ -12,7 +12,12 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isFetching }) => 
     // of the first function only once, when the component is mounted (first loaded).
     useEffect(() => {
         fetchProfile(user_id);
-      }, []);
+    }, []);
+
+    const [post, setPost] = useState({
+        caption: "aijdasd",
+        image: "aojdoajsd"
+    });
 
     // If user is not authenticated, redirected to login page (home)
     if (!isAuthenticated) {
@@ -26,38 +31,41 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isFetching }) => 
 
     // Grabbing all the values from the main objects.
     // Uncomment the following console.log to see the values of the profile object.
-    // console.log(profile);
+    console.log(profile);
     const { bio, user, follows, followedBy } = profile;
     const { first_name, last_name, username, avatar } = user;
-    return (
-        <Fragment>
-            <div className="userInfo">
-                <img src={avatar} alt="user profile avatar"/>
-                <div>
-                    <p>{`Name: ${first_name} ${last_name}`}</p>
+    
+    if(!isFetching) {
+        return (
+            <Fragment>
+                <div className="userInfo">
+                    <img src={avatar} alt="user profile avatar"/>
+                    <div>
+                        <p>{`Name: ${first_name} ${last_name}`}</p>
+                    </div>
+                    <div>
+                        <p>{`Username: ${username}`}</p>
+                    </div>
+                    <div>
+                        <p>{`Bio: ${bio}`}</p>
+                    </div>
+                    <div>
+                        <p>{`Follows ${follows.length} people`}</p>
+                    </div>
+                    <div>
+                        <p>{`Followed by ${followedBy.length} people`}</p>
+                    </div>
                 </div>
-                <div>
-                    <p>{`Username: ${username}`}</p>
-                </div>
-                <div>
-                    <p>{`Bio: ${bio}`}</p>
-                </div>
-                <div>
-                    <p>{`Follows ${follows.length} people`}</p>
-                </div>
-                <div>
-                    <p>{`Followed by ${followedBy.length} people`}</p>
-                </div>
-            </div>
-        </Fragment>
-    )
+            </Fragment>
+        )
+    }
 }
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     me: state.auth.user,
     profile: state.profile.profile,
-    isFetching: state.profile.isAuthenticated
+    isFetching: state.profile.isFetching
 });
 
 const mapDispatchToProps = {
