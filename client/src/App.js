@@ -4,15 +4,15 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // Redux
 import { Provider } from 'react-redux';
 import store from './store'
-
-// Components
-import Home from './components/layout/Home';
-import Navbar from './components/layout/Navbar';
-import Alert from './components/layout/Alert';
-import Login from './components/layout/Login'
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
-import Register from './components/layout/Register';
+
+// Components
+import Navbar from './components/layout/Navbar';
+import Alert from './components/layout/Alert';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+import Profile from './components/pages/Profile';
 
 import './App.css';
 
@@ -34,10 +34,9 @@ const App = () => {
           <section className="container">
             <Alert />
             <Switch>
-              {/* Other routes will go here like such: */}
-              {/* <Route exact path='/' component={HomeComponent} /> */}
+              {/* Other routes will go here */}
               <Route exact path='/register' component={Register} />
-
+              <Route exact path='/profile/:user_id' component={Profile} />
             </Switch>
           </section>
         </Fragment>
