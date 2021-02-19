@@ -84,29 +84,19 @@ router.post('/', [
 })
 
 
-// @route  GET api/users
-// @desc   Gets list of all users, then matches the first characters with the user input
+// @route  GET api/users/search
+// @desc   Gets user who's username contains the input
 // @access Public
 router.get('/search', [], async (req, res ) => {
-    console.log('search')
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array});
-    }
-    const input = req.body;
-    
+    const { input } = req.body;
+    const regex = new RegExp(`${input}`, 'i');
+
     try{
-        // Check if email has already been used
-        let users_array = await User.find().toArray();
-        let search_result = []
-        for(let i=0; i<users_array.length; i++){
-            let username = users_array[i]["username"]
-            if(username.startsWith(input)){
-                search_result.append[username]
-            }
-        }
-        search_result.sort()
-        res.send(search_result)
+        let users_array = await User.find({
+            username: regex
+        }).limit(10).exec();
+
+        res.send(users_array)
     } catch(err){
         console.error(err.message)
         res.status(500).send('Server error.')
