@@ -96,7 +96,15 @@ router.get('/search', [], async (req, res ) => {
             username: regex
         }, '_id username avatar').limit(10).exec();
 
-        res.send(users_array)
+        if (users_array.length === 0) {
+            return res.send({
+                msg: "No users found"
+            })
+        } else
+            return res.send({
+                msg: "Found the following users",
+                users: users_array
+            })
     } catch(err){
         console.error(err.message)
         res.status(500).send('Server error.')
