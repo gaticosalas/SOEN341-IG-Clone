@@ -94,7 +94,7 @@ router.get('/search', [], async (req, res ) => {
     try{
         let users_array = await User.find({
             username: regex
-        }).limit(10).exec();
+        }, '_id username avatar').limit(10).exec();
 
         res.send(users_array)
     } catch(err){
