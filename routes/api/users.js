@@ -83,4 +83,33 @@ router.post('/', [
     }
 })
 
+
+// @route  GET api/users/search
+// @desc   Gets user who's username contains the input
+// @access Public
+router.get('/search', [], async (req, res ) => {
+    const { input } = req.body;
+    const regex = new RegExp(`${input}`, 'i');
+
+    try{
+        let users_array = await User.find({
+            username: regex
+        }, '_id username avatar').limit(10).exec();
+
+        if (users_array.length === 0) {
+            return res.send({
+                msg: "No users found"
+            })
+        } else
+            return res.send({
+                msg: "Found the following users",
+                users: users_array
+            })
+    } catch(err){
+        console.error(err.message)
+        res.status(500).send('Server error.')
+    }
+
+})
+
 module.exports = router;
