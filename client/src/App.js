@@ -13,6 +13,7 @@ import Alert from './components/layout/Alert';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Profile from './components/pages/Profile';
+import CreatePost from './components/pages/CreatePost';
 
 import './App.css';
 
@@ -37,6 +38,7 @@ const App = () => {
               {/* Other routes will go here */}
               <Route exact path='/register' component={Register} />
               <Route exact path='/profile/:user_id' component={Profile} />
+              <Route exact path='/create-post' component={CreatePost} />
             </Switch>
           </section>
         </Fragment>

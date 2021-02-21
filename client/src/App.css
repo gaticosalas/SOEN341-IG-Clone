@@ -17,3 +17,11 @@
   margin: auto;
   margin-top: 6rem;
 }
+
+/* NAVBAR */
+
+.navbarWrapper {
+  width: 100%;
+  display: flex;
+  place-content: space-between;
+}

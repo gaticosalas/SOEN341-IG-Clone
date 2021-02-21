@@ -22,7 +22,7 @@ async (req,res) => {
     }
 
     try {//user is logged in, has token, and thus ID is available
-        const user = await (await User.findById(req.user.id)).select('-password'); //don't need to send in the password so omit it
+        const user = await User.findById(req.user.id).select('-password'); //don't need to send in the password so omit it
         const newPost = new Post({
             picture: req.body.picture,
             caption: req.body.caption,
