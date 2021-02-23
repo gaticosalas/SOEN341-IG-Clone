@@ -15,6 +15,7 @@ import Login from './components/auth/Login';
 import Profile from './components/pages/Profile';
 import CreatePost from './components/pages/CreatePost';
 import Posts from './components/pages/Posts';
+import Post from './components/pages/Post';
 
 import './App.css';
 
@@ -41,6 +42,8 @@ const App = () => {
               <Route exact path='/profile/:user_id' component={Profile} />
               <Route exact path='/create-post' component={CreatePost} />
               <Route exact path='/posts' component={Posts} />
+              <Route exact path='/post/:post_id' component={Post} />
+
 
             </Switch>
           </section>

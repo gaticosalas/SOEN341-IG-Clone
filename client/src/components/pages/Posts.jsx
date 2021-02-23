@@ -1,27 +1,29 @@
 import React, { Fragment, useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom';
 import { fetchAllPosts } from '../../actions/posts'
 import PostItem from './PostItem.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-const Posts = ({ isAuthenticated, fetchAllPosts, post: { posts, isFetching } }) => {
+
+const Posts = ({ fetchAllPosts, post: { posts }, isFetching }) => {
     useEffect(() => {
         fetchAllPosts()
     }, [fetchAllPosts])
-    // return <h1>hello</h1>
+
+
     return isFetching ? <Fragment><h1>loading</h1></Fragment> :
         <Fragment>
             <h1 className="large text-primary"></h1>
-            <p className='lead'>
-                <i className='fas fa-user' /> Posts:
+            <p className="lead">
+                <i className="fas fa-user" /> Posts:
             </p>
-            {/* PostForm */}
-            <div className='posts'>
-                {posts.map(post => (
-                    <PostItem key={post._id} post={post} />
+
+            <div >
+                {posts.map((post) => (
+                    < PostItem key={post} post={post} />
+                    // <pre>{JSON.stringify(post)}</pre>
                 ))}
 
             </div>
@@ -29,13 +31,10 @@ const Posts = ({ isAuthenticated, fetchAllPosts, post: { posts, isFetching } }) 
         </Fragment>
 
 }
-// Posts.propTypes = {
-//     fetchAllPosts: PropTypes.func.isRequired,
-//     post: PropTypes.object.isRequired
-// }
+
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    // isAuthenticated: state.auth.isAuthenticated,
     post: state.posts,
     isFetching: state.posts.isFetching,
 })
