@@ -119,12 +119,12 @@ router.put('/follow/:user_id', auth, async (req, res) => {
 
         const myself = {
             user: req.user.id,
-            name: myUser.name,
+            username: myUser.username,
             avatar: myUser.avatar,
         }
         const them = {
             user: req.params.user_id,
-            name: theirUser.name,
+            username: theirUser.username,
             avatar: theirUser.avatar,
         }
         // unshift() is like push but it adds to the beginning
