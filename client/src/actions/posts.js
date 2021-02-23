@@ -43,6 +43,7 @@ export const createPost = ({ picture, caption }) => async dispatch => {
             type: POST_CREATION_SUCCESS,
         });
         dispatch(setAlert(res.data.msg, 'success'));
+        return res.data;
     } catch (err) {
         const errors = err.response.data.errors;
 
