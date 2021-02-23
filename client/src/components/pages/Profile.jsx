@@ -3,7 +3,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProfile } from '../../actions/profile';
 
-const Profile = ({ isAuthenticated, me, fetchProfile, profile, isFetching }) => {
+const Profile = ({ isAuthenticated, me, fetchProfile, profile, user, isFetching }) => {
     // grabs route parameter (user_id) from '/profile/:user_id'
     let { user_id } = useParams();
 
@@ -14,6 +14,7 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isFetching }) => 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
     // If user is not authenticated, redirected to login page (home)
     if (!isAuthenticated) {
         return <Redirect to='/' />
@@ -23,18 +24,18 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isFetching }) => 
     if (isFetching) {
         return <p>Loading...</p>
     }
-    
-    if(!isFetching) {
+
+    if (!isFetching) {
         // Grabbing all the values from the main objects.
         // Uncomment the following console.log to see the values of the profile object.
         // console.log(profile);
-        const { bio, user, follows, followedBy } = profile;
-        const { first_name, last_name, username, avatar } = user;
-        
+        const { user, bio, follows, followedBy } = profile;
+        const { avatar, first_name, last_name, username } = user;
+
         return (
             <Fragment>
                 <div className="userInfo">
-                    <img src={avatar} alt="user profile avatar"/>
+                    <img src={avatar} alt="user profile avatar" />
                     <div>
                         <p>{`Name: ${first_name} ${last_name}`}</p>
                     </div>

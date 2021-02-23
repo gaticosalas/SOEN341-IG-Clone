@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 
 const Navbar = ({ logout, user }) => {
-    
+
     const location = useLocation();
     const { pathname } = location;
 
@@ -14,14 +14,16 @@ const Navbar = ({ logout, user }) => {
                 NAVBAR
             </div>
             <div className="navLinks">
-                { user ? 
+                {user ?
                     <Fragment>
-                        { pathname !== '/create-post' ? <Link to="/create-post"><span>NEW POST</span></Link> : null }
-                        { pathname !== `/profile/${user._id}` ? <Link to={`/profile/${user._id}`}><span>MY PROFILE</span></Link> : null }
-                        <span onClick={logout} style={{ cursor: 'pointer', marginLeft: '10px'}}>LOGOUT</span>
+                        {pathname !== '/create-post' ? <Link to="/create-post"><span>NEW POST -</span></Link> : null}
+                        {pathname !== `/profile/${user._id}` ? <Link to={`/profile/${user._id}`}><span> MY PROFILE</span></Link> : null}
+                        {pathname !== `/posts` ? <Link to={`/posts`}><span> POSTS</span></Link> : null}
+
+                        <span onClick={logout} style={{ cursor: 'pointer', marginLeft: '10px' }}> - LOGOUT</span>
                     </Fragment>
-                : 
-                    null }
+                    :
+                    null}
             </div>
         </div>
     )
