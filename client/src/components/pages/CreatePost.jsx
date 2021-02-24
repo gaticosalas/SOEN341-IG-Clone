@@ -1,7 +1,5 @@
 import React, { Fragment, useState } from 'react'
-// import { Redirect } from 'react-router-dom';
-
-import { Redirect } from 'react-router';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createPost, uploadPicture, deletePicture } from '../../actions/posts';
 
@@ -11,6 +9,7 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
     const [caption, setCaption] = useState('');
     const [imageName, setImageName] = useState('No image selected');
     const hiddenFileInput = React.useRef(null);
+    const [postID, setPostID] = useState(null);
 
     const handleClick = () => {
         hiddenFileInput.current.click();
@@ -28,7 +27,7 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
         await deletePicture(image.imageKey);
         setImage(null);
         setImageName('No image selected');
-    }
+    };
 
     const onSubmit = async e => {
 
@@ -38,25 +37,19 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
             caption
         }
         const res = await createPost(formData);
-        if (res) {
-            console.log(res.post._id)
-            return (< Redirect to={`/post/${res.post._id}`} />)
-
+        if (res.post) {
+            console.log(res.post._id);
+            setPostID(res.post._id);
         }
-        // console.log("error")
-        // console.log(res.post);
+    };
 
-        // console.log(res.post._id);
-        // Uncomment following code when Single Post page is created:
-
-        // return 
-
-    }
-
+    if (postID) {
+        return <Redirect to={`/post/${postID}`} />
+    };
 
     if (!isAuthenticated) {
         return <Redirect to='/' />
-    }
+    };
 
     return (
         <Fragment>
