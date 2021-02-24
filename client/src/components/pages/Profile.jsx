@@ -18,7 +18,6 @@ const Profile = ({ isAuthenticated, me, fetchUserPosts, fetchProfile, profile, i
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
     // If user is not authenticated, redirected to login page (home)
     if (!isAuthenticated) {
         return <Redirect to='/' />
