@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createPost, uploadPicture, deletePicture } from '../../actions/posts';
 
@@ -9,6 +9,7 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
     const [caption, setCaption] = useState('');
     const [imageName, setImageName] = useState('No image selected');
     const hiddenFileInput = React.useRef(null);
+    const [postID, setPostID] = useState(null);
 
     const handleClick = () => {
         hiddenFileInput.current.click();
@@ -17,7 +18,7 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
     const uploadImg = async img => {
         console.log(img);
         setImageName(img.name);
-        
+
         let res = await uploadPicture(img);
         setImage(res);
     };
@@ -26,29 +27,29 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
         await deletePicture(image.imageKey);
         setImage(null);
         setImageName('No image selected');
-    }
+    };
 
     const onSubmit = async e => {
+
         e.preventDefault();
         const formData = {
             picture: image.imageUrl,
             caption
         }
         const res = await createPost(formData);
-        if (res) {
-            console.log(res);
-
-            // Uncomment following code when Single Post page is created:
-            
-            // return (
-            //     <Redirect to={`/post/${res.post._id}`} />
-            // )
+        if (res.post) {
+            console.log(res.post._id);
+            setPostID(res.post._id);
         }
-    }
+    };
+
+    if (postID) {
+        return <Redirect to={`/post/${postID}`} />
+    };
 
     if (!isAuthenticated) {
         return <Redirect to='/' />
-    }
+    };
 
     return (
         <Fragment>
@@ -59,10 +60,10 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
                         <label htmlFor="picture">Choose your image (.png and .jpeg formats only)</label>
                         <input
                             type="file"
-                            ref={hiddenFileInput} 
-                            name="picture" 
-                            accept="image/x-png,image/jpeg" 
-                            style={{display: 'none'}} 
+                            ref={hiddenFileInput}
+                            name="picture"
+                            accept="image/x-png,image/jpeg"
+                            style={{ display: 'none' }}
                             onChange={e => uploadImg(e.target.files[0])}
                         />
                         <div className="falseinputWrapper">
@@ -71,18 +72,18 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
                         </div>
                     </div>
 
-                    { isFetching ?
+                    {isFetching ?
                         <div>LOADING...</div>
-                    :
-                        null }
+                        :
+                        null}
 
-                    { image ? 
+                    {image ?
                         <div className="imageWrapper">
-                            <img style={{width: '100%'}} src={image.imageUrl} alt={imageName} />
+                            <img style={{ width: '100%' }} src={image.imageUrl} alt={imageName} />
                             <p onClick={deleteImg}>DELETE PICTURE</p>
                         </div>
-                    :
-                        null }
+                        :
+                        null}
 
                     <div className="form-group">
                         <label htmlFor="caption">Caption your post</label>
@@ -102,6 +103,7 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
         </Fragment>
     )
 }
+
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,

@@ -50,7 +50,7 @@ export const createPost = ({ picture, caption }) => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: POST_CREATION_FAIL
         });
@@ -65,7 +65,7 @@ export const fetchAllPosts = () => async dispatch => {
         const res = await axios.get('/api/posts');
 
         dispatch({
-            type: RECEIVE_POSTS,    
+            type: RECEIVE_POSTS,
             payload: res.data
         });
     } catch (err) {
@@ -74,7 +74,7 @@ export const fetchAllPosts = () => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: POSTS_FETCHING_ERROR
         });
@@ -89,7 +89,7 @@ export const fetchPost = post_id => async dispatch => {
         const res = await axios.get(`/api/posts/${post_id}`);
 
         dispatch({
-            type: RECEIVE_SINGLE_POST,    
+            type: RECEIVE_SINGLE_POST,
             payload: res.data
         });
     } catch (err) {
@@ -98,7 +98,7 @@ export const fetchPost = post_id => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: SINGLE_POST_FETCHING_ERROR
         });
@@ -115,7 +115,7 @@ export const deletePost = post_id => async dispatch => {
         const res = await axios.delete(`/api/posts/${post_id}`);
 
         dispatch({
-            type: POST_DELETE_FINISHED,    
+            type: POST_DELETE_FINISHED,
         });
         dispatch(setAlert(res.data.msg, 'success'));
     } catch (err) {
@@ -124,7 +124,7 @@ export const deletePost = post_id => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: POST_DELETE_FINISHED
         });
@@ -139,7 +139,7 @@ export const fetchUserPosts = user_id => async dispatch => {
         const res = await axios.get(`/api/posts/user/${user_id}`);
 
         dispatch({
-            type: RECEIVE_USER_POSTS,    
+            type: RECEIVE_USER_POSTS,
             payload: res.data
         });
     } catch (err) {
@@ -148,7 +148,7 @@ export const fetchUserPosts = user_id => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: USER_POSTS_FETCHING_ERROR
         });
@@ -211,7 +211,7 @@ export const createComment = (text, post_id) => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: COMMENT_HANDLING_FAIL
         });
@@ -236,7 +236,7 @@ export const deleteComment = (post_id, comment_id) => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: COMMENT_HANDLING_FAIL
         });
@@ -269,7 +269,7 @@ export const uploadPicture = imageFile => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: IMAGE_HANDLING_FINISHED
         });
@@ -292,7 +292,7 @@ export const deletePicture = image_key => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
         };
-        
+
         dispatch({
             type: IMAGE_HANDLING_FINISHED
         });
