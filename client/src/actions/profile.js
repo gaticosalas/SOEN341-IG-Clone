@@ -6,7 +6,9 @@ import {
     PROFILE_UPDATE_FINISHED,
     PROFILE_DELETE_FINISHED,
     FOLLOW_HANDLING_FINISHED,
-    PROFILE_FETCHING_ERROR
+    PROFILE_FETCHING_ERROR,
+    RECEIVE_SEARCH_RESULTS,
+    RECEIVE_SEARCH_RESULTS_ERROR
 } from './types';
 
 export const requestData = () => ({
@@ -162,6 +164,38 @@ export const unfollowUser = user_id=> async dispatch => {
         
         dispatch({
             type: FOLLOW_HANDLING_FINISHED
+        });
+    }
+}
+
+
+// SearchUsers
+export const searchUsers = input => async dispatch => {
+    dispatch(requestData());
+    console.log(input)
+    const body = JSON.stringify({ input });
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    try {
+        const res = await axios.get(`api/users/search`, {params: {input: input}});
+        dispatch({
+            type: RECEIVE_SEARCH_RESULTS,    
+            payload: res.data   
+        });
+    } catch (err) {
+        console.log(err)
+        // const errors = err.response.data.errors;
+        // console.log(errors)
+        // if (errors) {
+        //     errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+        // };
+        dispatch({
+            type: RECEIVE_SEARCH_RESULTS_ERROR
         });
     }
 }

@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
+import SearchBar from './SearchBar'
 
 const Navbar = ({ logout, user }) => {
     
@@ -12,6 +13,9 @@ const Navbar = ({ logout, user }) => {
         <div className="navbarWrapper">
             <div className="logo">
                 NAVBAR
+            </div>
+            <div className="searchbar">
+                <SearchBar/>
             </div>
             <div className="navLinks">
                 { user ? 
