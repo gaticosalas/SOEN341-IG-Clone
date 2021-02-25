@@ -92,6 +92,34 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
                             )
                         })}
                     </div>
+                    
+                    {isMe?
+                    //checking to see if a user is NOT on their own profile page, and if they are following/not following the profile they're checking out
+                    //the type & value should change depending on whether or not they are following/notfollowing the profile in question
+                        null
+                    :
+                        isFollowed ?
+                            <button className="btn btn-primary" onClick={async () => {
+                                const res = await unfollowUser(user_id); 
+                                if (res === "success") {
+                                    setIsFollowed(false);
+                                    setFollowedByLength(followedByLength - 1);
+                                }
+                            }}>
+                                Unfollow
+                            </button>
+                            :
+                            <button className="btn btn-primary" onClick={async ()=> {
+                                const res = await followUser(user_id); 
+                                if (res === "success") {
+                                    setIsFollowed(true);
+                                    setFollowedByLength(followedByLength + 1);
+                                }
+                            }}>
+                                Follow
+                            </button>
+                    }
+                     
                 </div>
             </Fragment >
         )
