@@ -26,7 +26,7 @@ const Post = ({ isAuthenticated, post: { username, picture, caption, avatar, lik
         <Fragment>
             <div className="container" >
                 <hr />
-                <img src={picture} />
+                <img style={{width: '100%'}} src={picture} />
                 <p>{`caption:${caption}`}</p>
                 <p>Posted on: <Moment format='YYYY/MM/DD'>{date}</Moment></p>
                 <img src={avatar} />

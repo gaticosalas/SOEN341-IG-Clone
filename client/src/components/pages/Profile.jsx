@@ -87,7 +87,7 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
                         {posts.map((post, key) => {
                             return (
                                 <div key={key} >
-                                    <img src={post.picture} alt="user post" />
+                                    <img style={{width: '100%'}} src={post.picture} alt="user post" />
                                     <p>{post.caption}</p>
                                 </div>
                             )
