@@ -2,9 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProfile } from '../../actions/profile';
+import { fetchUserPosts } from '../../actions/posts'
 
 
-const Profile = ({ isAuthenticated, me, fetchProfile, profile, isProfileFetching }) => {
+const Profile = ({ isAuthenticated, me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts }) => {
     // grabs route parameter (user_id) from '/profile/:user_id'
     let { user_id } = useParams();
     const [loading, setLoading] = useState(true);
@@ -12,7 +13,7 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isProfileFetching
     // of the first function only once, when the component is mounted (first loaded).
     useEffect(() => {
         fetchProfile(user_id);
-
+        fetchUserPosts(user_id);
         setLoading(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -24,11 +25,11 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isProfileFetching
     }
 
     // We will make a loading component later
-    if (loading || isProfileFetching) {
+    if (loading || isProfileFetching || arePostsFetching) {
         return <p>Loading...</p>
     }
 
-    if (!isProfileFetching && !loading) {
+    if (!isProfileFetching && !loading && !arePostsFetching) {
         // Grabbing all the values from the main objects.
         // Uncomment the following console.log to see the values of the profile object.
         //console.log(profile);
@@ -54,8 +55,18 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isProfileFetching
                     <div>
                         <p>{`Followed by ${followedBy.length} people`}</p>
                     </div>
+                    <div className="user-posts">
+                        {posts.map((post, key) => {
+                            return (
+                                <div key={key} >
+                                    <img src={post.picture} alt="user post" />
+                                    <p>{post.caption}</p>
+                                </div>
+                            )
+                        })}
+                    </div>
                 </div>
-            </Fragment>
+            </Fragment >
         )
     }
 }
@@ -65,10 +76,13 @@ const mapStateToProps = state => ({
     me: state.auth.user,
     profile: state.profile.profile,
     isProfileFetching: state.profile.isFetching,
+    arePostsFetching: state.posts.isFetching,
+    posts: state.posts.userPosts
 });
 
 const mapDispatchToProps = {
-    fetchProfile
+    fetchProfile,
+    fetchUserPosts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
