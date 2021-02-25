@@ -129,6 +129,7 @@ export const followUser = user_id => async dispatch => {
             type: FOLLOW_HANDLING_FINISHED,    
         });
         dispatch(setAlert(res.data.msg, 'success'));
+        return "success"
     } catch (err) {
         const errors = err.response.data.errors;
 
@@ -153,6 +154,7 @@ export const unfollowUser = user_id=> async dispatch => {
             type: FOLLOW_HANDLING_FINISHED,    
         });
         dispatch(setAlert(res.data.msg, 'success'));
+        return "success"
     } catch (err) {
         const errors = err.response.data.errors;
 

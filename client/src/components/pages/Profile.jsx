@@ -1,39 +1,42 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchProfile } from '../../actions/profile';
-import { fetchUserPosts } from '../../actions/posts'
+import { fetchProfile, followUser, unfollowUser } from '../../actions/profile';
 
+const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
 
-const Profile = ({ isAuthenticated, me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts }) => {
-    // grabs route parameter (user_id) from '/profile/:user_id'
     let { user_id } = useParams();
+    const [isMe, setIsMe] = useState(false);
+    const [isFollowed, setIsFollowed] = useState(false);
     const [loading, setLoading] = useState(true);
-    // useEffect with a [] as its second parameter executes the content
-    // of the first function only once, when the component is mounted (first loaded).
+    const [followsLength, setFollowsLength] = useState();
+    const [followedByLength, setFollowedByLength] = useState();
+
     useEffect(() => {
         fetchProfile(user_id);
         fetchUserPosts(user_id);
-        setLoading(false);
+
+        user_id === me?._id ? setIsMe(true) : setIsMe(false);
+        console.log(isMe);
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [me]);
 
-    // If user is not authenticated, redirected to login page (home)
-    if (!isAuthenticated) {
-        return <Redirect to='/' />
-    }
+    useEffect(() => {
+        if (profile?.followedBy?.some(user => user.user === me._id)) {
+            setIsFollowed(true)
+        };
+        setFollowsLength(profile?.follows.length);
+        setFollowedByLength(profile?.followedBy.length)
+        setLoading(false);
+    }, [profile]);
 
-    // We will make a loading component later
     if (loading || isProfileFetching || arePostsFetching) {
         return <p>Loading...</p>
     }
 
     if (!isProfileFetching && !loading && !arePostsFetching) {
-        // Grabbing all the values from the main objects.
-        // Uncomment the following console.log to see the values of the profile object.
-        //console.log(profile);
-        const { user, bio, follows, followedBy } = profile;
-
+        const { user, bio } = profile;
 
         return (
             <Fragment>
@@ -49,11 +52,37 @@ const Profile = ({ isAuthenticated, me, fetchUserPosts, fetchProfile, profile, i
                         <p>{`Bio: ${bio}`}</p>
                     </div>
                     <div>
-                        <p>{`Follows ${follows.length} people`}</p>
+                        <p>{`Follows ${followsLength} people`}</p>
                     </div>
                     <div>
-                        <p>{`Followed by ${followedBy.length} people`}</p>
+                        <p>{`Followed by ${followedByLength} people`}</p>
                     </div>
+
+                    {isMe?
+                        null
+                    :
+                        isFollowed ?
+                            <button className="btn btn-primary" onClick={async () => {
+                                const res = await unfollowUser(user_id); 
+                                if (res === "success") {
+                                    setIsFollowed(false);
+                                    setFollowedByLength(followedByLength - 1);
+                                }
+                            }}>
+                                Unfollow
+                            </button>
+                            :
+                            <button className="btn btn-primary" onClick={async ()=> {
+                                const res = await followUser(user_id); 
+                                if (res === "success") {
+                                    setIsFollowed(true);
+                                    setFollowedByLength(followedByLength + 1);
+                                }
+                            }}>
+                                Follow
+                            </button>
+                    }
+
                     <div className="user-posts">
                         {posts.map((post, key) => {
                             return (
@@ -81,7 +110,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     fetchProfile,
-    fetchUserPosts
+    fetchUserPosts,
+    followUser,
+    unfollowUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
