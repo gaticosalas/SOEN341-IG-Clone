@@ -31,7 +31,7 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isProfileFetching
     if (!isProfileFetching && !loading) {
         // Grabbing all the values from the main objects.
         // Uncomment the following console.log to see the values of the profile object.
-        console.log(profile);
+        //console.log(profile);
         const { user, bio, follows, followedBy } = profile;
 
 
