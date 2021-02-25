@@ -19,7 +19,6 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isFetching, follo
         fetchProfile(user_id);
         //IDs match so isMe is set as true, false if they don't
         user_id === me?._id ? setIsMe(true) : setIsMe(false);
-        console.log(isMe);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [me]);
@@ -29,8 +28,8 @@ const Profile = ({ isAuthenticated, me, fetchProfile, profile, isFetching, follo
         if (profile?.followedBy?.some(user => user.user === me._id)) {
             setIsFollowed(true)
         };
-        setFollowsLength(profile?.follows.length);
-        setFollowedByLength(profile?.followedBy.length)
+        setFollowsLength(profile?.follows?.length);
+        setFollowedByLength(profile?.followedBy?.length)
         setLoading(false);
     }, [profile])
 
