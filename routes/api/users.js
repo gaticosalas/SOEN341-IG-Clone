@@ -87,10 +87,9 @@ router.post('/', [
 // @route  GET api/users/search
 // @desc   Gets user who's username contains the input
 // @access Public
-router.get('/search', [], async (req, res ) => {
-    const { input } = req.body;
+router.get('/search', async (req, res) => {
+    const input = req.query.input;
     const regex = new RegExp(`${input}`, 'i');
-
     try{
         let users_array = await User.find({
             username: regex
