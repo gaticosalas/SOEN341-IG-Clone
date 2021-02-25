@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProfile, followUser, unfollowUser } from '../../actions/profile';
+import { fetchUserPosts } from '../../actions/posts';
 
 const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
 
@@ -19,7 +20,7 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
         user_id === me?._id ? setIsMe(true) : setIsMe(false);
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [me]);
+    }, [me, user_id]);
 
     useEffect(() => {
         if (profile?.followedBy?.some(user => user.user === me._id)) {
@@ -91,35 +92,7 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
                                 </div>
                             )
                         })}
-                    </div>
-                    
-                    {isMe?
-                    //checking to see if a user is NOT on their own profile page, and if they are following/not following the profile they're checking out
-                    //the type & value should change depending on whether or not they are following/notfollowing the profile in question
-                        null
-                    :
-                        isFollowed ?
-                            <button className="btn btn-primary" onClick={async () => {
-                                const res = await unfollowUser(user_id); 
-                                if (res === "success") {
-                                    setIsFollowed(false);
-                                    setFollowedByLength(followedByLength - 1);
-                                }
-                            }}>
-                                Unfollow
-                            </button>
-                            :
-                            <button className="btn btn-primary" onClick={async ()=> {
-                                const res = await followUser(user_id); 
-                                if (res === "success") {
-                                    setIsFollowed(true);
-                                    setFollowedByLength(followedByLength + 1);
-                                }
-                            }}>
-                                Follow
-                            </button>
-                    }
-                     
+                    </div>   
                 </div>
             </Fragment >
         )
