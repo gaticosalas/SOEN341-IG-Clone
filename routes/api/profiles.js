@@ -108,13 +108,13 @@ router.delete('/', auth, async (req, res) => {
 router.put('/follow/:user_id', auth, async (req, res) => {
     try {
         const myProfile = await Profile.findOne({ user: req.user.id });
-        const theirProfile = await Profile.findById(req.params.user_id);
+        const theirProfile = await Profile.findOne({ user: req.params.user_id});
 
         const myUser = await User
-            .findById(req.user.id)
+            .findOne({ _id: req.user.id})
             .select('-password');
         const theirUser = await User
-            .findbyId(req.params.user_id)
+            .findOne({ _id: req.params.user_id})
             .select('-password');
 
         const myself = {
@@ -134,7 +134,7 @@ router.put('/follow/:user_id', auth, async (req, res) => {
         await myProfile.save();
         await theirProfile.save();
 
-        res.json({myProfile, msg: "User followed successfully"});
+        res.json({myProfile, theirProfile, msg: "success"});
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -147,7 +147,7 @@ router.put('/follow/:user_id', auth, async (req, res) => {
 router.delete('/follow/:user_id', auth, async (req, res) => {
     try {
         const myProfile = await Profile.findOne({ user: req.user.id });
-        const theirProfile = await Profile.findById(req.params.user_id);
+        const theirProfile = await Profile.findOne({ user: req.params.user_id});
 
         // Getting the index of the follow to remove
         const removeFollowIndex = myProfile.follows.map(item => item.user).indexOf(req.params.user_id);
@@ -161,7 +161,7 @@ router.delete('/follow/:user_id', auth, async (req, res) => {
         theirProfile.followedBy.splice(removeFollowedByIndex, 1);
         await theirProfile.save();
 
-        res.json({ profile, msg: "User unfollowed successfully" });
+        res.json({ myProfile, theirProfile, msg: "success" });
     } catch(err) {
         console.error(err.message);
         res.status(500).send('Server Error');
