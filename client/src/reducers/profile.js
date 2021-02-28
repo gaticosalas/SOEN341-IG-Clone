@@ -33,13 +33,11 @@ export default function (state = initialState, action) {
         case RECEIVE_SEARCH_RESULTS:
             return {
                 ...state,
-                isFetching: false,
                 searchResults: payload
             };
         case RECEIVE_SEARCH_RESULTS_ERROR:
             return {
                 ...state,
-                isFetching: false,
                 searchResults: []
             }
         case PROFILE_UPDATE_FINISHED:

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { searchUsers } from '../../actions/profile';
+import { Link } from 'react-router-dom'
 
-import { Modal, Button } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const SearchBar = ( {searchUsers, result} ) => {
     const [ input, setInput ] = useState("")
@@ -11,41 +12,48 @@ const SearchBar = ( {searchUsers, result} ) => {
         searchUsers(input)
     }
 
+    const handleChange = async (e) => {
+        const value = e.target.value
+        setInput(value)
+        searchUsers(input);
+        };
+
     useEffect(() => {
-        console.log(result)
+        
     }, [result]);
 
-    const [show, setShow] = useState(false)
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    console.log(result)
+
+    let users = ("users" in result) ? result["users"] : null;
+
+    console.log(`users: ${users}`)
+
+
 
     return (
         <Fragment>
             <div className="search-bar-wrapper">
-                <form>
-                    <input type="text" name="user-search" placeholder="Find users..." onChange={e => setInput(e.target.value)}></input>
-                    <button onClick={(e)=>{
-                        handleclick(e);
-                        handleShow()
-                        }}>Search!</button>
+                <form autoComplete="off">
+                    <input type="text" name="user-search" placeholder="Find users..." onChange={e => handleChange(e)}></input>
                 </form>
             </div>
-            <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-            <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-                Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-                Save Changes
-            </Button>
-            </Modal.Footer>
-        </Modal>
+            { users && input ?
+                <Fragment>
+                    <ul className="user-list">
+                        {users.map((user, idx) => 
+                            <Link to={`/profile/${user._id}`}><li className={`user-item`} key={idx}>
+                                {user._id}
+                            </li>
+                            </Link>
+                        )}
+                        
+                    </ul>
+                    <div>esse</div>
+                </Fragment>
+                : null
+            }
+            
         </Fragment>
-        
     )
 }
 
