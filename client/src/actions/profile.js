@@ -173,8 +173,6 @@ export const unfollowUser = user_id=> async dispatch => {
 
 // SearchUsers
 export const searchUsers = input => async dispatch => {
-    dispatch(requestData());
-    console.log(input)
     const body = JSON.stringify({ input });
 
     const config = {
@@ -190,7 +188,7 @@ export const searchUsers = input => async dispatch => {
             payload: res.data   
         });
     } catch (err) {
-        console.log(err)
+        // console.log(err)
         // const errors = err.response.data.errors;
         // console.log(errors)
         // if (errors) {
