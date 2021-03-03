@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { post } from 'request';
 import { setAlert } from './alerts';
 import {
     REQUEST_POST_DATA,
@@ -116,6 +117,7 @@ export const deletePost = post_id => async dispatch => {
 
         dispatch({
             type: POST_DELETE_FINISHED,
+            payload: post_id
         });
         dispatch(setAlert(res.data.msg, 'success'));
     } catch (err) {

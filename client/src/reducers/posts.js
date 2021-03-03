@@ -40,8 +40,13 @@ export default function (state = initialState, action) {
         case POST_CREATION_FAIL:
         case COMMENT_HANDLING_FAIL:
         case POST_DELETE_FINISHED:
+            let userPosts = state.userPosts;
+            if (payload) {
+                userPosts = userPosts.filter(post => post._id !== payload);
+            }
             return {
                 ...state,
+                userPosts,
                 isFetching: false,
             };
         case IMAGE_HANDLING_FINISHED:

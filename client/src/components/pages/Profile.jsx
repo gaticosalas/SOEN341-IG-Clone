@@ -84,6 +84,7 @@ const Profile = ({ me, fetchUserPosts, deletePost, fetchProfile, profile, isProf
                     }
 
                     <div className="user-posts">
+                        {/* {console.log(posts)} */}
                         {posts.map((post, key) => {
                             return (
                                 <div key={key} >
