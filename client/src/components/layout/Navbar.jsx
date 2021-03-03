@@ -15,7 +15,7 @@ const Navbar = ({ logout, user }) => {
                 NAVBAR
             </div>
             <div className="searchbar">
-                <SearchBar/>
+                { user ? <SearchBar/> : null}
             </div>
             <div className="navLinks">
                 {user ?

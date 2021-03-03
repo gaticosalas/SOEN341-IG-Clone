@@ -6,17 +6,18 @@ import { Link } from 'react-router-dom'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const SearchBar = ( {searchUsers, result} ) => {
-    const [ input, setInput ] = useState("")
+    const [ input, setInput ] = useState("");
+
     function handleclick(e){
         e.preventDefault()
         searchUsers(input)
     }
 
-    const handleChange = async (e) => {
-        const value = e.target.value
-        setInput(value)
-        searchUsers(input);
-        };
+    const handleChange = e => {
+        const value = e.target.value;
+        setInput(value);
+        searchUsers(value);
+    };
 
     useEffect(() => {
         
@@ -27,8 +28,6 @@ const SearchBar = ( {searchUsers, result} ) => {
     let users = ("users" in result) ? result["users"] : null;
 
     console.log(`users: ${users}`)
-
-
 
     return (
         <Fragment>
@@ -42,13 +41,12 @@ const SearchBar = ( {searchUsers, result} ) => {
                     <ul className="user-list">
                         {users.map((user, idx) => 
                             <Link to={`/profile/${user._id}`}><li className={`user-item`} key={idx}>
-                                {user._id}
+                                {user.username}
                             </li>
                             </Link>
                         )}
                         
                     </ul>
-                    <div>esse</div>
                 </Fragment>
                 : null
             }

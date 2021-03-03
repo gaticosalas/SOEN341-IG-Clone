@@ -173,16 +173,8 @@ export const unfollowUser = user_id=> async dispatch => {
 
 // SearchUsers
 export const searchUsers = input => async dispatch => {
-    const body = JSON.stringify({ input });
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
     try {
-        const res = await axios.get(`api/users/search`, {params: {input: input}});
+        const res = await axios.get('/api/users/search', {params: {input: input}});
         dispatch({
             type: RECEIVE_SEARCH_RESULTS,    
             payload: res.data   
