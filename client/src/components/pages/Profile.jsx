@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProfile, followUser, unfollowUser } from '../../actions/profile';
-import { fetchUserPosts } from '../../actions/posts';
+import { fetchUserPosts, deletePost } from '../../actions/posts';
 
-const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
+const Profile = ({ me, fetchUserPosts, deletePost, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
 
     let { user_id } = useParams();
     const [isMe, setIsMe] = useState(false);
@@ -89,6 +89,9 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
                                 <div key={key} >
                                     <img style={{width: '100%'}} src={post.picture} alt="user post" />
                                     <p>{post.caption}</p>
+
+                                    <button onClick={()=> deletePost(post._id)} type='button' class='btn btn-danger'> <i class='fas fa-times' /> Delete Post</button>
+
                                 </div>
                             )
                         })}
@@ -105,14 +108,17 @@ const mapStateToProps = state => ({
     profile: state.profile.profile,
     isProfileFetching: state.profile.isFetching,
     arePostsFetching: state.posts.isFetching,
-    posts: state.posts.userPosts
+    posts: state.posts.userPosts,
+    deletePost: state.posts.post.deletePost,
 });
 
 const mapDispatchToProps = {
     fetchProfile,
     fetchUserPosts,
     followUser,
-    unfollowUser
+    unfollowUser,
+
+    deletePost
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
