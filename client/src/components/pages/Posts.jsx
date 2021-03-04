@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-
+//The feed will only show posts of followed users only*
 const Posts = ({ fetchAllPosts, post: { posts }, isFetching }) => {
     useEffect(() => {
         fetchAllPosts()
@@ -22,8 +22,8 @@ const Posts = ({ fetchAllPosts, post: { posts }, isFetching }) => {
 
             <div >
                 {posts.map((post) => (
+                    // console.log(JSON.stringify(post))
                     < PostItem key={post} post={post} />
-                    // <pre>{JSON.stringify(post)}</pre>
                 ))}
 
             </div>
