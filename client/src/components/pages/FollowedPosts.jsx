@@ -1,33 +1,35 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { fetchUserPosts } from '../../actions/posts';
-import { connect } from 'react-redux';
-import { fetchProfile } from '../../actions/profile';
+import React, { Fragment, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { fetchAllPosts } from '../../actions/posts'
+import PostItem from './PostItem.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-function FollowedPosts({ isAuthenticated, user, profile, fetchUserPosts, userPosts, fetchProfile, isProfileFetching, arePostsFetching, posts }) {
-    // console.log(user)
+
+//The feed will only show posts of followed users only*
+const FollowedPosts = ({ isAuthenticated, me, profile, fetchAllPosts, post: { posts }, isFetching }) => {
     useEffect(() => {
-        // fetchProfile(profile.follows[0]);
-        // fetchUserPosts(profile.follows)
+        fetchAllPosts()
+    }, [fetchAllPosts])
+    // console.log("posts: ", posts)
+    // console.log("me: ", me)
+    // console.log("following:", profile.follows)
+    const filteredPosts = posts.filter((p) => (profile.follows.map((f) => (f.user)).includes(p.user)))
+    // console.log("filtered posts: ", filteredPosts)
 
-    }, []);
-    // console.log(profile.follows[0].user)
-    // let ami = profile.follows[0].user
-    // console.log(userPosts.ami)
-
-    return arePostsFetching ? <Fragment><h1>loading</h1></Fragment> :
+    return isFetching ? <Fragment><h1>loading</h1></Fragment> :
         <Fragment>
             <h1 className="large text-primary"></h1>
             <p className="lead">
-                <i className="fas fa-user" /> Followed Posts:
+                <i className="fas fa-user" /> Posts:
             </p>
 
             <div >
-                {/* {posts.map((post) => (
+                { }
+                {filteredPosts.map((post) => (
                     // console.log(JSON.stringify(post))
                     < PostItem key={post} post={post} />
-                ))} */}
-                poopface
+                ))}
 
             </div>
 
@@ -35,19 +37,20 @@ function FollowedPosts({ isAuthenticated, user, profile, fetchUserPosts, userPos
 
 }
 
+
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    // user: state.auth.user,
-    isProfileFetching: state.profile.isFetching,
+    me: state.auth.user,
+    post: state.posts,
+    isFetching: state.posts.isFetching,
     profile: state.profile.profile,
-    arePostsFetching: state.posts.isFetching,
-    userPosts: state.posts.userPosts
-});
+})
+
+
+
 
 const mapDispatchToProps = {
-    fetchUserPosts,
-    fetchProfile
-
+    fetchAllPosts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FollowedPosts);
