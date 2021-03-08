@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
 
-const Login = ({ login, user, isAuthenticated, isUserLoaded }) => {
+const Login = ({ login, isAuthenticated, isUserLoaded }) => {
 
     const [formData, setFormData] = useState({
         email: '',
@@ -20,7 +20,7 @@ const Login = ({ login, user, isAuthenticated, isUserLoaded }) => {
     }
 
     if (isAuthenticated && isUserLoaded) {
-        return <Redirect to={`/profile/${user._id}`} />
+        return <Redirect to='/feed' />
     }
 
     return (
@@ -61,7 +61,6 @@ const Login = ({ login, user, isAuthenticated, isUserLoaded }) => {
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     isUserLoaded: state.auth.isUserLoaded,
-    user: state.auth.user
 });
 
 const mapDispatchToProps = {

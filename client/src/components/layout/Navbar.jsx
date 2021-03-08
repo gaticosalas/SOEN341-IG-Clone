@@ -16,11 +16,9 @@ const Navbar = ({ logout, user }) => {
             <div className="navLinks">
                 {user ?
                     <Fragment>
-                        {pathname !== '/create-post' ? <Link to="/create-post"><span>NEW POST -</span></Link> : null}
+                        {pathname !== '/create-post' ? <Link to='/create-post'><span>NEW POST -</span></Link> : null}
                         {pathname !== `/profile/${user._id}` ? <Link to={`/profile/${user._id}`}><span> MY PROFILE</span></Link> : null}
-                        {pathname !== `/posts` ? <Link to={`/posts`}><span> - POSTS</span></Link> : null}
-
-                        {pathname !== `/followed_posts` ? <Link to={`/followed_posts`}><span>- FOLLOWED POSTS</span></Link> : null}
+                        {pathname !== '/feed' ? <Link to='/feed'><span>- FEED</span></Link> : null}
 
                         <span onClick={logout} style={{ cursor: 'pointer', marginLeft: '10px' }}> - LOGOUT</span>
                     </Fragment>

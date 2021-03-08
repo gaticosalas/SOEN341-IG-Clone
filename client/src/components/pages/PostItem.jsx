@@ -1,14 +1,11 @@
-import React, { Fragment, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { fetchPost } from '../../actions/posts'
-import Moment from 'react-moment'
-import { Link, Redirect } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { fetchPost } from '../../actions/posts';
+import Moment from 'react-moment';
+import { Link } from 'react-router-dom';
 
 
-const PostItem = ({ post: { _id, picture, user, caption, username, avatar, likes, date } }) => {
-    console.log({ _id })
-    // const [image, setImage] = useState(null);
+const PostItem = ({ post: { _id, picture, caption, username, avatar, likes, date } }) => {
 
     return (
         <Fragment>
@@ -30,10 +27,6 @@ const PostItem = ({ post: { _id, picture, user, caption, username, avatar, likes
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth,
-
-    // post: state.posts.post,
-
 
 })
 

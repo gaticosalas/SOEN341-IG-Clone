@@ -1,23 +1,26 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { fetchAllPosts } from '../../actions/posts'
+import { fetchFollowedUsersPosts } from '../../actions/posts'
 import PostItem from './PostItem.jsx'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Redirect, useHistory } from 'react-router-dom';
 
 
 
 //The feed will only show posts of followed users only*
-const FollowedPosts = ({ isAuthenticated, me, profile, fetchAllPosts, post: { posts }, isFetching }) => {
-    useEffect(() => {
-        fetchAllPosts()
-    }, [fetchAllPosts])
-    // console.log("posts: ", posts)
-    // console.log("me: ", me)
-    // console.log("following:", profile.follows)
-    const filteredPosts = posts.filter((p) => (profile.follows.map((f) => (f.user)).includes(p.user)))
-    // console.log("filtered posts: ", filteredPosts)
+const FollowedPosts = ({ loggedOut, me, fetchFollowedUsersPosts, post: { posts }, isFetching }) => {
+    const [loading, setLoading] = useState(true);
 
-    return isFetching ? <Fragment><h1>loading</h1></Fragment> :
+    useEffect(() => {
+        fetchFollowedUsersPosts(me?._id);
+        setLoading(false);
+
+    }, [me]);
+
+    if (loggedOut) {
+        return <Redirect to='/' />
+    };
+
+    return isFetching || loading ? <Fragment><h1>loading</h1></Fragment> :
         <Fragment>
             <h1 className="large text-primary"></h1>
             <p className="lead">
@@ -25,10 +28,8 @@ const FollowedPosts = ({ isAuthenticated, me, profile, fetchAllPosts, post: { po
             </p>
 
             <div >
-                { }
-                {filteredPosts.map((post) => (
-                    // console.log(JSON.stringify(post))
-                    < PostItem key={post} post={post} />
+                {posts.map((post, key) => (
+                    < PostItem key={key} post={post} />
                 ))}
 
             </div>
@@ -39,7 +40,7 @@ const FollowedPosts = ({ isAuthenticated, me, profile, fetchAllPosts, post: { po
 
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    loggedOut: state.auth.loggedOut,
     me: state.auth.user,
     post: state.posts,
     isFetching: state.posts.isFetching,
@@ -50,7 +51,7 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = {
-    fetchAllPosts
+    fetchFollowedUsersPosts
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FollowedPosts);

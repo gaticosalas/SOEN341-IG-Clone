@@ -14,7 +14,8 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isUserLoaded: false,
-    user: null
+    user: null,
+    loggedOut: false,
 }
 
 export default function (state = initialState, action) {
@@ -32,6 +33,7 @@ export default function (state = initialState, action) {
                 isFetching: false,
                 isAuthenticated: true,
                 isUserLoaded: true,
+                loggedOut: false,
                 user: payload
             };
         case REGISTER_SUCCESS:
@@ -42,6 +44,7 @@ export default function (state = initialState, action) {
                 ...payload,
                 isFetching: false,
                 isAuthenticated: true,
+                loggedOut: false
             };
         case REGISTER_FAIL:
         case LOGIN_FAIL:
@@ -54,7 +57,8 @@ export default function (state = initialState, action) {
                 user: null,
                 isFetching: false,
                 isAuthenticated: false,
-                isUserLoaded: false
+                isUserLoaded: false,
+                loggedOut: true,
             };
         default:
             return state;

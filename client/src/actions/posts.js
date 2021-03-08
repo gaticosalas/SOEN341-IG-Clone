@@ -57,12 +57,12 @@ export const createPost = ({ picture, caption }) => async dispatch => {
     }
 }
 
-// Fetch all Posts
-export const fetchAllPosts = () => async dispatch => {
+// Fetch Followed Users Posts
+export const fetchFollowedUsersPosts = user_id => async dispatch => {
     dispatch(requestData());
 
     try {
-        const res = await axios.get('/api/posts');
+        const res = await axios.get(`/api/posts/myFeed/${user_id}`);
 
         dispatch({
             type: RECEIVE_POSTS,

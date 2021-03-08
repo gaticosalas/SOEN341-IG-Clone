@@ -1,27 +1,20 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { fetchPost } from '../../actions/posts'
-import Moment from 'react-moment'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { connect } from 'react-redux';
+import { fetchPost } from '../../actions/posts';
+import Moment from 'react-moment';
+import { Redirect } from 'react-router-dom';
 
-const Post = ({ isAuthenticated, post: { user, username, picture, caption, avatar, likes, date }, fetchPost, isFetching }) => {
+const Post = ({ loggedOut, post: { username, picture, caption, avatar, likes, date }, fetchPost, isFetching }) => {
 
-    let { post_id } = useParams()
+    let { post_id } = useParams();
     useEffect(() => {
         fetchPost(post_id)
-    }, []);
+    }, [post_id]);
 
-    console.log(post_id)
-    console.log("profile:", user)
-
-
-
-    // if (!isAuthenticated) {
-    //     return <Redirect to='/' />
-    // }
-
-
+    if (loggedOut) {
+        return <Redirect to='/' />
+    };
 
     return isFetching ? <Fragment><h1>loading</h1></Fragment>
         :
@@ -45,7 +38,7 @@ const Post = ({ isAuthenticated, post: { user, username, picture, caption, avata
 
 }
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    loggedOut: state.auth.loggedOut,
     post: state.posts.post,
     isFetching: state.posts.post.isFetching,
     user: state.auth.user,

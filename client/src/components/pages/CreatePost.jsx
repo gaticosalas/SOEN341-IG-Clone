@@ -1,9 +1,9 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createPost, uploadPicture, deletePicture } from '../../actions/posts';
 
-const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture, isFetching }) => {
+const CreatePost = ({ loggedOut, createPost, uploadPicture, deletePicture, isFetching }) => {
 
     const [image, setImage] = useState(null);
     const [caption, setCaption] = useState('');
@@ -47,7 +47,7 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
         return <Redirect to={`/post/${postID}`} />
     };
 
-    if (!isAuthenticated) {
+    if (loggedOut) {
         return <Redirect to='/' />
     };
 
@@ -106,7 +106,7 @@ const CreatePost = ({ isAuthenticated, createPost, uploadPicture, deletePicture,
 
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    loggedOut: state.auth.loggedOut,
     isFetching: state.posts.isFetching
 });
 

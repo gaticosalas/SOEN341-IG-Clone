@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProfile, followUser, unfollowUser } from '../../actions/profile';
 import { fetchUserPosts } from '../../actions/posts';
 
-const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
+const Profile = ({ loggedOut, me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
 
     let { user_id } = useParams();
     const [isMe, setIsMe] = useState(false);
@@ -32,7 +32,9 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
         setLoading(false);
     }, [profile]);
 
-
+    if (loggedOut) {
+        return <Redirect to='/' />
+    };
 
     if (loading || isProfileFetching || arePostsFetching) {
         return <p>Loading...</p>
@@ -103,7 +105,7 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    loggedOut: state.auth.loggedOut,
     me: state.auth.user,
     profile: state.profile.profile,
     isProfileFetching: state.profile.isFetching,

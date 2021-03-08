@@ -103,6 +103,32 @@ router.get('/user/:user_id', auth, async (req, res) => {
         }
 });
 
+// @route GET api/posts/myFeed
+// @desc Get Posts of users followed by current user
+// @access Private
+router.get('/myFeed/:user_id', auth, async (req, res) => {
+    try { 
+        const myProfile = await Profile.findOne({ user: req.params.user_id });
+        
+        let feed = [];
+
+        await Promise.all(myProfile.follows.map(async (user) => {
+            const posts = await Post.find().where('user').in(user.user).exec();
+            posts.forEach(post => feed.push(post));
+        }));
+
+        if (feed) {
+            feed.sort((a, b) => b.date - a.date);
+        } else return res.status(400).json({msg: "Feed is empty"});
+
+        res.json(feed);
+    } catch(err) {
+        console.error(err.message);
+        if(err.kind == 'ObjectId') {return res.status(400).json({msg: "One of the followed users ID does not exist"})}
+        res.status(500).send("server Error")
+    }
+});
+
 // @route PUT api/posts/like/:id
 // @desc Like Post
 // @access Private
