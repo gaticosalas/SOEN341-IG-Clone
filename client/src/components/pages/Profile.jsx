@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProfile, followUser, unfollowUser } from '../../actions/profile';
 import { fetchUserPosts } from '../../actions/posts';
 
-const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
+const Profile = ({ loggedOut, me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
 
     let { user_id } = useParams();
     const [isMe, setIsMe] = useState(false);
@@ -22,6 +22,7 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [me, user_id]);
 
+
     useEffect(() => {
         if (profile?.followedBy?.some(user => user.user === me._id)) {
             setIsFollowed(true)
@@ -30,6 +31,10 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
         setFollowedByLength(profile?.followedBy?.length)
         setLoading(false);
     }, [profile]);
+
+    if (loggedOut) {
+        return <Redirect to='/' />
+    };
 
     if (loading || isProfileFetching || arePostsFetching) {
         return <p>Loading...</p>
@@ -58,12 +63,12 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
                         <p>{`Followed by ${followedByLength} people`}</p>
                     </div>
 
-                    {isMe?
+                    {isMe ?
                         null
-                    :
+                        :
                         isFollowed ?
                             <button className="btn btn-primary" onClick={async () => {
-                                const res = await unfollowUser(user_id); 
+                                const res = await unfollowUser(user_id);
                                 if (res === "success") {
                                     setIsFollowed(false);
                                     setFollowedByLength(followedByLength - 1);
@@ -72,8 +77,8 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
                                 Unfollow
                             </button>
                             :
-                            <button className="btn btn-primary" onClick={async ()=> {
-                                const res = await followUser(user_id); 
+                            <button className="btn btn-primary" onClick={async () => {
+                                const res = await followUser(user_id);
                                 if (res === "success") {
                                     setIsFollowed(true);
                                     setFollowedByLength(followedByLength + 1);
@@ -87,12 +92,12 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
                         {posts.map((post, key) => {
                             return (
                                 <div key={key} >
-                                    <img style={{width: '100%'}} src={post.picture} alt="user post" />
+                                    <img style={{ width: '100%' }} src={post.picture} alt="user post" />
                                     <p>{post.caption}</p>
                                 </div>
                             )
                         })}
-                    </div>   
+                    </div>
                 </div>
             </Fragment >
         )
@@ -100,7 +105,7 @@ const Profile = ({ me, fetchUserPosts, fetchProfile, profile, isProfileFetching,
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated,
+    loggedOut: state.auth.loggedOut,
     me: state.auth.user,
     profile: state.profile.profile,
     isProfileFetching: state.profile.isFetching,
