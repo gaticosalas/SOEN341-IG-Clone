@@ -69,11 +69,7 @@ export const fetchFollowedUsersPosts = user_id => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        const errors = err.response.data.errors;
-
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-        };
+        console.log(err.response);
 
         dispatch({
             type: POSTS_FETCHING_ERROR
@@ -93,11 +89,7 @@ export const fetchPost = post_id => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        const errors = err.response.data.errors;
-
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-        };
+        console.log(err.response);
 
         dispatch({
             type: SINGLE_POST_FETCHING_ERROR
@@ -143,11 +135,7 @@ export const fetchUserPosts = user_id => async dispatch => {
             payload: res.data
         });
     } catch (err) {
-        const errors = err.response.data.errors;
-
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
-        };
+        console.log(err.response);
 
         dispatch({
             type: USER_POSTS_FETCHING_ERROR
@@ -170,7 +158,7 @@ export const likePost = post_id => async dispatch => {
     }
 }
 
-// Like a Post
+// Unlike a Post
 export const unlikePost = post_id => async dispatch => {
     try {
         const res = await axios.put(`/api/posts/unlike/${post_id}`);
