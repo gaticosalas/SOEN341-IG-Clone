@@ -16,6 +16,8 @@ body {
   background-color: #fafafa;
 }
 
+a
+
 .container {
   max-width: 80%;
   margin: auto;
@@ -34,9 +36,4 @@ body {
   .container {
     max-width: 100%;
   }
-}
-
-/* BOOTSTRAP CHANGES */
-.btn {
-  padding: 0
 }

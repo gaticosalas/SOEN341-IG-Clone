@@ -8,15 +8,17 @@ import { ReactComponent as Liked } from '../../assets/icons/heart-filled.svg';
 import { ReactComponent as Unliked } from '../../assets/icons/heart-bordered.svg';
 import '../../styles/pages/postItem.css';
 
-const PostItem = ({ me, loggedOut, post: { _id, picture, caption, username, avatar, likes, date }, likePost, unlikePost }) => {
+const PostItem = ({ me, loggedOut, post: { _id, user, picture, caption, username, avatar, likes, date }, likePost, unlikePost }) => {
     const [liked, setLiked] = useState(false);
-    const [likesLength, setLikesLength] = useState(0);
+    const [likesLength, setLikesLength] = useState(likes.length);
 
     useEffect(() => {
         setLikesLength(likes.length);
         if(likes.some(user => user.user === me._id))
             setLiked(true);
-    }, []); 
+        else
+            setLiked(false);
+    }, [likes]); 
 
     if (loggedOut) {
         return <Redirect to='/' />
@@ -26,11 +28,11 @@ const PostItem = ({ me, loggedOut, post: { _id, picture, caption, username, avat
         <Fragment>
             <div className="post-item" >
                 <div className="post-header">
-                    <img src={avatar} alt="user pfp"/>
-                    <p className="mb-0"><b>{username}</b></p>
+                    <Link to={`/profile/${user}`}><img src={avatar} alt="user pfp"/></Link>
+                    <Link to={`/profile/${user}`}><p className="mb-0"><b>{username}</b></p></Link>
                 </div>
 
-                <Link className="btn" to={`/post/${_id}`}><img style={{ width: '100%' }} src={picture} alt="user post"/></Link>
+                <Link to={`/post/${_id}`}><img style={{ width: '100%' }} src={picture} alt="user post"/></Link>
                 
 
                 <div className="post-content">

@@ -30,8 +30,8 @@ const FollowedPosts = ({ loggedOut, me, fetchFollowedUsersPosts, post: { posts }
 
             <div >
                 {posts.map((post, key) => (
-                    <div className="mb-5">
-                        <PostItem key={key} post={post} />
+                    <div className="mb-5" key={key}>
+                        <PostItem post={post} />
                     </div>
                 ))}
 
