@@ -6,8 +6,9 @@ import { Link, Redirect } from 'react-router-dom';
 
 import { ReactComponent as Liked } from '../../assets/icons/heart-filled.svg';
 import { ReactComponent as Unliked } from '../../assets/icons/heart-bordered.svg';
+import '../../styles/pages/postItem.css';
 
-const PostItem = ({ me, loggedOut, post: { _id, picture, caption, username, avatar, likes, date }, inPostPage, likePost, unlikePost }) => {
+const PostItem = ({ me, loggedOut, post: { _id, picture, caption, username, avatar, likes, date }, likePost, unlikePost }) => {
     const [liked, setLiked] = useState(false);
     const [likesLength, setLikesLength] = useState(0);
 
@@ -23,12 +24,17 @@ const PostItem = ({ me, loggedOut, post: { _id, picture, caption, username, avat
 
     return (
         <Fragment>
-            <div className="container" >
-                <hr />
-                <img style={{ width: '100%' }} src={picture} alt="user post"/>
-                <p>{`caption:${caption}`}</p>
-                <p>{`likes: ${likesLength}`}</p>
-                <span>
+            <div className="post-item" >
+                <div className="post-header">
+                    <img src={avatar} alt="user pfp"/>
+                    <p className="mb-0"><b>{username}</b></p>
+                </div>
+
+                <Link className="btn" to={`/post/${_id}`}><img style={{ width: '100%' }} src={picture} alt="user post"/></Link>
+                
+
+                <div className="post-content">
+                    <span>
                     { liked ?
                         <span style={{cursor: 'pointer'}} onClick={_ => {unlikePost(_id); setLiked(false); setLikesLength(likesLength - 1);}} >
                             <Liked /> 
@@ -38,12 +44,11 @@ const PostItem = ({ me, loggedOut, post: { _id, picture, caption, username, avat
                             <Unliked />
                         </span>
                     }
-                </span>
-
-                <p>Posted on: <Moment format='YYYY/MM/DD'>{date}</Moment></p>
-                <img src={avatar} alt="user pfp"/>
-                <p>{`Username:${username}`}</p>
-                { !inPostPage ? <Link className="btn" to={`/post/${_id}`}>CLICK TO SEE POST</Link> : null }
+                    </span>
+                    <p><b>{ (likesLength > 1 || likesLength === 0) ? `${likesLength} likes` : `${likesLength} like`}</b></p>
+                    <p><b>{username}</b> {caption}</p>
+                    <p className="time-posted"><Moment fromNow>{date}</Moment></p>
+                </div>
             </div>
 
         </Fragment>

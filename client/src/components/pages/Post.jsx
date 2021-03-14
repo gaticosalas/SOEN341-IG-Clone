@@ -28,7 +28,7 @@ const Post = ({ loggedOut, user, post, fetchPost, isFetching }) => {
         <Fragment><h1>loading</h1></Fragment>
         :
         <Fragment>
-            <PostItem post={post} inPostPage={true} />
+            <PostItem post={post} />
 
 
         </Fragment>

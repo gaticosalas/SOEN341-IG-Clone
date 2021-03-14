@@ -1,0 +1,25 @@
+.post-item {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    max-width: 600px;
+    margin: auto;
+}
+.post-header {
+    display: flex;
+    flex-flow: wrap;
+    align-items: center;
+    padding: 10px 15px;
+}
+.post-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+.post-content {
+    padding: 10px 15px;
+}
+.time-posted {
+    color: gray;
+}
