@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
 /* Global Styles */
 
 /* 
@@ -30,6 +32,10 @@ a
   width: 100%;
   display: flex;
   place-content: space-between;
+}
+.logo {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
 }
 
 @media only screen and (max-width: 576px) {
