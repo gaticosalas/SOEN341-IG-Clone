@@ -3,6 +3,7 @@ import { Redirect, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchProfile, followUser, unfollowUser } from '../../actions/profile';
 import { fetchUserPosts } from '../../actions/posts';
+import './Profile.css'
 
 const Profile = ({ loggedOut, me, fetchUserPosts, fetchProfile, profile, isProfileFetching, arePostsFetching, posts, followUser, unfollowUser }) => {
 
@@ -46,22 +47,21 @@ const Profile = ({ loggedOut, me, fetchUserPosts, fetchProfile, profile, isProfi
         return (
             <Fragment>
                 <div className="userInfo">
-                    <img src={user?.avatar} alt="user profile avatar" />
-                    <div>
-                        <p>{`Name: ${user?.first_name} ${user?.last_name}`}</p>
+                    <div className="row p-5">
+                        <div className="col-4">
+                            <img src={user?.avatar} alt="user profile avatar" className="rounded-circle" />
+                        </div>
+                        <div className="col">
+                            <p className="row font-weight-bold paint">{user?.username}</p>
+                            <div className="row col-5 pl-0">
+                                <p className="col pl-0">{`${followsLength} following`}</p>
+                                <p className="col">{`${followedByLength} followers`}</p>
+                            </div>
+                            <p className="row">{user?.first_name} {user?.last_name}</p>
+                            <p className="row">{`${bio}`}</p>
+                        </div>
                     </div>
-                    <div>
-                        <p>{`Username: ${user?.username}`}</p>
-                    </div>
-                    <div>
-                        <p>{`Bio: ${bio}`}</p>
-                    </div>
-                    <div>
-                        <p>{`Follows ${followsLength} people`}</p>
-                    </div>
-                    <div>
-                        <p>{`Followed by ${followedByLength} people`}</p>
-                    </div>
+
 
                     {isMe ?
                         null
@@ -89,14 +89,18 @@ const Profile = ({ loggedOut, me, fetchUserPosts, fetchProfile, profile, isProfi
                     }
 
                     <div className="user-posts">
-                        {posts.map((post, key) => {
-                            return (
-                                <div key={key} >
-                                    <img style={{ width: '100%' }} src={post.picture} alt="user post" />
-                                    <p>{post.caption}</p>
-                                </div>
-                            )
-                        })}
+                        <div className="row">
+                            {posts.map((post, key) => {
+                                return (
+                                    <div key={key} className="col-4" >
+                                        <img style={{ width: '100%' }} src={post.picture} alt="user post" />
+                                        <p>{post.caption}</p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+
+
                     </div>
                 </div>
             </Fragment >
