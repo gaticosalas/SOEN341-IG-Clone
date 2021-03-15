@@ -20,6 +20,27 @@
 .post-content {
     padding: 10px 15px;
 }
+.interactive-section {
+    height: 35px;
+}
 .time-posted {
     color: gray;
 }
+.heart-animation {
+    animation: likeUnlikeAnimation 0.5s forwards;
+}
+
+@keyframes likeUnlikeAnimation {
+    0% {
+        width: 25px;
+        height: 25px;
+    }
+    50% {
+        width: 30px;
+        height: 30px;
+    }
+    100% {
+        width: 25px;
+        height: 25px;
+    }
+  }

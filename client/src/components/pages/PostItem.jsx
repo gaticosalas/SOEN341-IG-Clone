@@ -11,6 +11,7 @@ import '../../styles/pages/postItem.css';
 const PostItem = ({ me, loggedOut, post: { _id, user, picture, caption, username, avatar, likes, date }, likePost, unlikePost }) => {
     const [liked, setLiked] = useState(false);
     const [likesLength, setLikesLength] = useState(likes.length);
+    const [heartClassName, setHeartClassName] = useState('');
 
     useEffect(() => {
         setLikesLength(likes.length);
@@ -19,6 +20,14 @@ const PostItem = ({ me, loggedOut, post: { _id, user, picture, caption, username
         else
             setLiked(false);
     }, [likes]); 
+
+    const startStopAnimation = () => {    
+        setHeartClassName("heart-animation");
+    };
+
+    const onAnimationEnd = () => {
+        setHeartClassName("");
+    };
 
     if (loggedOut) {
         return <Redirect to='/' />
@@ -36,17 +45,28 @@ const PostItem = ({ me, loggedOut, post: { _id, user, picture, caption, username
                 
 
                 <div className="post-content">
-                    <span>
-                    { liked ?
-                        <span style={{cursor: 'pointer'}} onClick={_ => {unlikePost(_id); setLiked(false); setLikesLength(likesLength - 1);}} >
-                            <Liked /> 
-                        </span>
-                        :
-                        <span style={{cursor: 'pointer'}} onClick={_ => {likePost(_id); setLiked(true); setLikesLength(likesLength + 1);}}>
-                            <Unliked />
-                        </span>
-                    }
-                    </span>
+                    <div className="interactive-section">
+                        { liked ?
+                            <span style={{cursor: 'pointer'}} onAnimationEnd={onAnimationEnd}
+                            onClick={_ => {
+                                unlikePost(_id); 
+                                setLiked(false); 
+                                setLikesLength(likesLength - 1); 
+                                startStopAnimation();
+                            }}>
+                                <Liked className={heartClassName}/> 
+                            </span>
+                            :
+                            <span style={{cursor: 'pointer'}} onAnimationEnd={onAnimationEnd}
+                            onClick={_ => {
+                                likePost(_id); setLiked(true); 
+                                setLikesLength(likesLength + 1); 
+                                startStopAnimation();
+                            }}>
+                                <Unliked className={heartClassName}/>
+                            </span>
+                        }
+                    </div>
                     <p><b>{ (likesLength > 1 || likesLength === 0) ? `${likesLength} likes` : `${likesLength} like`}</b></p>
                     <p><b>{username}</b> {caption}</p>
                     <p className="time-posted"><Moment fromNow>{date}</Moment></p>

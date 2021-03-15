@@ -23,11 +23,6 @@ const FollowedPosts = ({ loggedOut, me, fetchFollowedUsersPosts, post: { posts }
 
     return isFetching || loading ? <Fragment><h1>loading</h1></Fragment> :
         <Fragment>
-            <h1 className="large text-primary"></h1>
-            <p className="lead">
-                <i className="fas fa-user" /> Posts:
-            </p>
-
             <div >
                 {posts.map((post, key) => (
                     <div className="mb-5" key={key}>
@@ -36,7 +31,6 @@ const FollowedPosts = ({ loggedOut, me, fetchFollowedUsersPosts, post: { posts }
                 ))}
 
             </div>
-
         </Fragment>
 
 }
