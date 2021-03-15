@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { fetchFollowedUsersPosts } from '../../actions/posts'
 import PostItem from './PostItem.jsx'
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -11,9 +11,10 @@ const FollowedPosts = ({ loggedOut, me, fetchFollowedUsersPosts, post: { posts }
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetchFollowedUsersPosts(me?._id);
-        setLoading(false);
-
+        if(me?._id) {
+            fetchFollowedUsersPosts(me._id);
+            setLoading(false);
+        }
     }, [me]);
 
     if (loggedOut) {
@@ -22,18 +23,14 @@ const FollowedPosts = ({ loggedOut, me, fetchFollowedUsersPosts, post: { posts }
 
     return isFetching || loading ? <Fragment><h1>loading</h1></Fragment> :
         <Fragment>
-            <h1 className="large text-primary"></h1>
-            <p className="lead">
-                <i className="fas fa-user" /> Posts:
-            </p>
-
             <div >
                 {posts.map((post, key) => (
-                    < PostItem key={key} post={post} />
+                    <div className="mb-5" key={key}>
+                        <PostItem post={post} />
+                    </div>
                 ))}
 
             </div>
-
         </Fragment>
 
 }

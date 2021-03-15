@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
 /* Global Styles */
 
 /* 
@@ -12,11 +14,42 @@
   --success-color: #28a745;
 }
 
+body {
+  background-color: #fafafa;
+}
+
 .container {
   max-width: 80%;
   margin: auto;
   margin-top: 6rem;
 }
+
+.alert-success {
+  position: fixed;
+  margin-top: 10px;
+  padding: 10px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  border-radius: 10px;
+}
+
+.alert-danger {
+  position: fixed;
+  margin-top: 10px;
+  padding: 10px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  border-radius: 10px;
+}
+
 
 /* NAVBAR */
 
@@ -24,4 +57,14 @@
   width: 100%;
   display: flex;
   place-content: space-between;
+}
+.logo {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 576px) {
+  .container {
+    max-width: 100%;
+  }
 }
